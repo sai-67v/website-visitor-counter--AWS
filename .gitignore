@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+venv/
+.venv/
+env/
+
+# IDE / Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment Variables / Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+
+# AWS Serverless & Deployment Frameworks
+.aws-sam/
+.serverless/
+.terraform/
+*.tfstate
+*.tfstate.backup
+dist/
+build/
+out/
