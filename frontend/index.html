@@ -1,25 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS Serverless Visitor Counter</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="style.css">
+  <!-- SEO & Meta -->
+  <title>AWS Serverless Visitor Counter | Cloud Engineering Portfolio</title>
+  <meta name="description" content="A serverless visitor counter built with AWS Lambda, API Gateway, and DynamoDB — showcasing real-world cloud engineering skills." />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Critical CSS (local stylesheet, loaded first) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Fonts: non-blocking with font-display=swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+
+  <!-- Font Awesome: non-blocking async load (eliminates 2,680ms render-block) -->
+  <link
+   rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" /></noscript>
 </head>
 
 <body>
 
-    <h1>My AWS Cloud Project</h1>
+  <!-- ===========================
+       NAVIGATION
+  ============================ -->
+  <nav class="navbar" id="navbar" aria-label="Main Navigation">
+    <div class="nav-container">
+    </div>
+  </nav>
 
-    <p>Welcome to my website!</p>
+  <!-- ===========================
+       MAIN CONTENT LANDMARK
+  ============================ -->
+  <main id="main-content">
 
-    <p>
-        Visitors:
-        <span id="visitor-count">Loading...</span>
-    </p>
 
-    <script src="script.js"></script>
+    <!-- ===========================
+         LIVE VISITOR COUNTER CARD
+    ============================ -->
+    <section class="counter-section section" id="counter" aria-labelledby="counter-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">
+            <i class="fas fa-signal" aria-hidden="true"></i> Real-time Data
+          </span>
+          <h2 class="section-title" id="counter-heading">Live Visitor Counter</h2>
+          <p class="section-subtitle">
+            This number is fetched live from AWS DynamoDB every time you load the page.
+          </p>
+        </div>
+
+        <div class="counter-card-wrapper">
+          <div class="counter-card" aria-labelledby="counter-heading">
+            <!-- Glow ring -->
+            <div class="counter-glow" aria-hidden="true"></div>
+
+            <div class="counter-icon" aria-hidden="true">
+              <i class="fas fa-users"></i>
+            </div>
+
+            <p class="counter-label" id="counter-label-text">Total Visitors</p>
+
+            <!-- The #visitor-count span — populated by script.js -->
+            <div class="counter-number" id="visitor-count" aria-live="polite" aria-atomic="true" aria-labelledby="counter-label-text">
+              <span class="spinner" role="status" aria-label="Loading visitor count">
+                <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                <span class="sr-only">Loading visitor count...</span>
+              </span>
+            </div>
+
+            <p class="counter-sub">and counting&nbsp;<i class="fas fa-heart" aria-hidden="true"></i></p>
+
+            <!-- Live indicator -->
+            <div class="live-badge" role="status" aria-label="Counter status: Live">
+              <span class="live-dot" aria-hidden="true"></span>
+              LIVE
+            </div>
+
+            <!-- Data source info -->
+            <div class="counter-meta" aria-label="Architecture Components">
+              <span><i class="fas fa-bolt" aria-hidden="true"></i> AWS Lambda</span>
+              <span><i class="fas fa-table" aria-hidden="true"></i> DynamoDB</span>
+              <span><i class="fas fa-exchange-alt" aria-hidden="true"></i> API Gateway</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script src="script.js" defer></script>
+
+  <script>
+    /* ── Navbar scroll effect ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ── Scroll-reveal on cards ── */
+    const revealEls = document.querySelectorAll('.card, .service-card, .counter-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
